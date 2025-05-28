@@ -156,7 +156,6 @@ while (op <= 6):
             thread.join() #wait for all threads
 
 
-
     if (op == 3):
 
         target = input("[*] Insert a ip adress or site you want to scan: ")
