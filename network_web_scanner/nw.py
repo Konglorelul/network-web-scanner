@@ -67,23 +67,25 @@ def parse_args():
     return args
 
 def gui_logic(args):
-    opt = ""
+
+    opt = decide_option(args)
 
     match opt:
         case "port_scanner_ip":
-            port_scanner(args.ip)
+            port_scanner(args.ip, args.output)
 
         case "port_scanner_port":
-            port_scanner(args.ip, args.port)
+            port_scanner(args.ip, args.output, args.port)
 
         case "vuln_scanner":
-            vuln_scanner(args.service, args.version)
+            vuln_scanner(args.service, args.version, args.output)
 
         case "xss":
-            xss(args.URL)
+            xss(args.URL, args.output)
 
         case "sqli":
-            sqli(args.URL)
+            sqli(args.URL, args.output)
+
 
 
 def decide_option(args):
@@ -125,11 +127,9 @@ def decide_option(args):
     return opt
 
 def main():
-    print("main")
     args = parse_args()
-    print(args.select_script)
-    print(args.ip)
-    print(args.port)
+    gui_logic(args)
+    
 
 
 if __name__ == '__main__':
