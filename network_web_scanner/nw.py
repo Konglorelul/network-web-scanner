@@ -18,7 +18,7 @@ def parse_args():
     Parser.add_argument(
         "-i", "--ip",
         metavar="IP",
-        help=""" Specify the targeted ip or subnet for host discovery (ex: 192.168.x)""",
+        help=""" Specify the targeted ip or subnet for host discovery (ex: 192.168.10.5 for ip scan or 192.168.2 for host discovery)""",
         type=str,
         default=None
     )
