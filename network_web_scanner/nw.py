@@ -1,10 +1,9 @@
 import argparse
 
-from port_scanner import port_scanner
+from porthost_scanner import porthost_scanner
 from vuln_scanner import vuln_scanner
 from sqli import sqli
 from xss import xss
-from output_xls import output
 
 def parse_args():
     print("...Waiting to fetch options and flags...")
@@ -18,7 +17,7 @@ def parse_args():
     Parser.add_argument(
         "-i", "--ip",
         metavar="IP",
-        help=""" Specify the targeted ip or subnet for host discovery (ex: 192.168.10.5 for ip scan or 192.168.2 for host discovery)""",
+        help=""" Specify the targeted ip or subnet for host discovery (ex: "192.168.10.5" for ip scan or "192.168.2" for host discovery)""",
         type=str,
         default=None
     )
@@ -26,7 +25,7 @@ def parse_args():
     Parser.add_argument(
         "-p", "--port",
         metavar="PORT",
-        help=""" Specify the targeted port """,
+        help=""" Specify the targeted port (ex: port "80" for a single port scan or "1-1024" for a range of ports ) """,
         type=str,
         default=None
     )
@@ -50,7 +49,7 @@ def parse_args():
     Parser.add_argument(
         "-u", "--URL",
         metavar="URL",
-        help=""" Specify the targeted URL for xss or URL+ injection placement character (ex: https://test.com/[*], https://test.com/arg=[*]  ) """,
+        help=""" Specify the targeted URL for XSS or SQLi URL + injection placement character (ex: https://test.com/search=[*], https://test.com/arg=[*]  ) """,
         type=str,
         default=None
     )
@@ -83,7 +82,7 @@ def decide_option(args):
         if args.service is not None and args.version is not None:
             opt = "vuln_scanner"
         else:
-            print("eroare selectie flaguri vuln_scanner")
+            print("eroare selectie flaguri vuln_scanner | trebuie specificate ambele: --service si --version")
     
     elif args.select_script == "xss" and args.ip is None and args.port is None and args.service is None and args.version is None:
        
@@ -98,7 +97,7 @@ def decide_option(args):
             opt = "sqli"
         else:
             print("eroare selectie flaguri sqli")
-   
+
     else:
         print("eroare scriptul selectat nu exista sau selectia flagurilor este gresita")
 
@@ -110,10 +109,10 @@ def gui_logic(args):
 
     match opt:
         case "port_scanner_ip":
-            port_scanner(args.ip, args.output)
+            porthost_scanner(args.ip, args.output)
 
         case "port_scanner_port":
-            port_scanner(args.ip, args.output, args.port)
+            porthost_scanner(args.ip, args.output, args.port)
 
         case "vuln_scanner":
             vuln_scanner(args.service, args.version, args.output)
@@ -123,6 +122,7 @@ def gui_logic(args):
 
         case "sqli":
             sqli(args.URL, args.output)
+
 
 def main():
     args = parse_args()
