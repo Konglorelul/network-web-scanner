@@ -39,4 +39,4 @@ def vuln_scanner(service, version, output=False):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"Vulners_{service}_{version}_{timestamp}.xls"
         wb.save(filename)
-        print(f"[+] Saved results to {filename}")
+        

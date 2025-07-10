@@ -4,10 +4,10 @@ from datetime import datetime
 
 def sqli(URL, output):
     if "[*]" not in URL:
-        print("URL-ul trebuie să conțină [*] ca marker de injecție.")
+        print("URL-ul needs to have [*] as injection marker")
         return
 
-    payload = "1 OR 1=1"
+    payload = "'"
     url = URL.replace("[*]", payload)
 
     
@@ -21,7 +21,7 @@ def sqli(URL, output):
 
     
     cookies = {
-        "PHPSESSID": "0g6po881qpanlh101u9g7d9rg1",
+        "PHPSESSID": "utvtq4rm217uu7984ma9l30ag1",
         "security": "low"
     }
 
@@ -30,14 +30,12 @@ def sqli(URL, output):
 
         print(f"Sent payload to: {response.url}")
         print(f"HTTP Status: {response.status_code}")
-        print("Response Preview:")
-        print(response.text[:500])
 
         if "error in your SQL syntax" in response.text.lower():
-            print("Nu s-a detectat comportament suspect.")
+            print("\nNo suspicious behaviour detected")
             result = "No"
         else:
-            print("Posibil SQLi detectat!")
+            print("\nPossible SQLi detected!")
             result = "Yes"
 
         if output:
@@ -55,7 +53,6 @@ def sqli(URL, output):
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             wb.save(f"SQLi_Result_{timestamp}.xls")
-            print(f"Rezultat salvat în SQLi_Result_{timestamp}.xls")
 
     except requests.exceptions.RequestException as e:
-        print(f"[!] Eroare la trimiterea cererii: {e}")
+        print(f"[!] Error sending the request: {e}")

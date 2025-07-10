@@ -4,14 +4,14 @@ from datetime import datetime
 
 def xss(URL, output):
     if "[*]" not in URL:
-        print("URL-ul trebuie să conțină [*] ca marker de injecție.")
+        print("URL-ul needs to have [*] as injection marker")
         return
 
     payload = "<script>alert('TestXSS')</script>"
     target_url = URL.replace("[*]", payload)
 
     cookies = {
-        "PHPSESSID": "0g6po881qpanlh101u9g7d9rg1",
+        "PHPSESSID": "utvtq4rm217uu7984ma9l30ag1",
         "security": "low"
     }
 
@@ -36,15 +36,13 @@ def xss(URL, output):
 
         print(f"Sent payload to: {response.url}")
         print(f"HTTP Status: {response.status_code}")
-        print("Response Preview:")
-        print(response.text[:500])
 
         reflected = payload in response.text
 
         if reflected:
-            print("Posibil XSS detectat!")
+            print("Possible XSS detected!")
         else:
-            print("Payload-ul nu a fost reflectat.")
+            print("Payload was not reflected")
 
         if output:
             wb = xlwt.Workbook()
@@ -61,7 +59,6 @@ def xss(URL, output):
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             wb.save(f"XSS_Result_{timestamp}.xls")
-            print(f"Rezultat salvat în XSS_Result_{timestamp}.xls")
 
     except requests.exceptions.RequestException as e:
-        print(f"[!] Eroare la trimiterea cererii: {e}")
+        print(f"[!] Error sending the request: {e}")

@@ -49,7 +49,7 @@ def parse_args():
     Parser.add_argument(
         "-u", "--URL",
         metavar="URL",
-        help=""" Specify the targeted URL for XSS or SQLi URL + injection placement character (ex: https://test.com/search=[*], https://test.com/arg=[*]  ) """,
+        help=""" Specify the targeted URL for XSS or SQLi; URL + injection placement character (ex: https://test.com/search=[*], https://test.com/arg=[*]  ) """,
         type=str,
         default=None
     )
@@ -75,31 +75,31 @@ def decide_option(args):
         elif args.ip is not None and args.port is not None:
             opt = "port_scanner_port"
         else:
-            print("eroare selectie flaguri port_scanner")
+            print("Error in flag selection for port_scanner")
             
     elif args.select_script == "vuln_scanner" and args.ip is None and args.port is None and args.URL is None:
         
         if args.service is not None and args.version is not None:
             opt = "vuln_scanner"
         else:
-            print("eroare selectie flaguri vuln_scanner | trebuie specificate ambele: --service si --version")
+            print("Error in flag selection for vuln_scanner | both flags are needed: --service si --version")
     
     elif args.select_script == "xss" and args.ip is None and args.port is None and args.service is None and args.version is None:
        
         if args.URL is not None:
             opt = "xss"
         else:
-            print("eroare selectie flaguri xss")
+            print("Error in flag selection for xss")
                      
     elif args.select_script == "sqli" and args.ip is None and args.port is None and args.service is None and args.version is None:
         
         if args.URL is not None:
             opt = "sqli"
         else:
-            print("eroare selectie flaguri sqli")
+            print("Error in flag selection for sqli")
 
     else:
-        print("eroare scriptul selectat nu exista sau selectia flagurilor este gresita")
+        print("Error; Selected script does not exist or error in flag selection")
 
     return opt
 

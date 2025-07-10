@@ -21,7 +21,7 @@ def porthost_scanner(ip, output, port=None):
         scan_port(ip, int(port), output)
 
     else:
-        print("Eroare format IP sau port/range invalid")
+        print("Eroare IP format or invalid port/range")
 
 def subnet(ip):
     return ip.count(".") == 2
@@ -65,12 +65,14 @@ def serv_vers(ip, queue, results):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(5)
             s.connect((ip, port))
-            s.send(b'\r\n')
+            #s.send(b'\r\n') #folosit pentru mesaje goale, unele servicii pot raspunde
+            s.send(b"GET / HTTP/1.0\r\n\r\n")
             version = s.recv(2048).decode(errors="ignore").strip()
             s.close()
             service = socket.getservbyport(port, "tcp") if port < 1024 else "Unknown"
             results.append((ip, port, service, version))
             print(f"{ip}:{port} Service: {service} Version: {version}")
+            print(f"[test] Received:\n{version}")
         except:
             results.append((ip, port, "Unknown", "Unknown"))
             print(f"{ip}:{port} Service: Unknown Version: Unknown")
