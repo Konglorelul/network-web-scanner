@@ -2,7 +2,7 @@ from vulners import VulnersApi
 from datetime import datetime
 import xlwt
 
-API_KEY = "NYEZ6HH8GPY9D2MEYHCIZSBN23ENXN7SVWFF7448MW7IZ4IC2RBQE7J3IGLYDZ7Z"
+API_KEY = ""
 
 def vuln_scanner(service, version, output=False):
     vulners_api = VulnersApi(api_key=API_KEY)
